@@ -4,9 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Post extends Model
 {
-    protected $fillable = ['title', 'sub_title', 'description', 'slug'];
     use HasFactory;
+    use SoftDeletes;
+
+    protected $fillable = ['title', 'sub_title', 'description', 'slug'];
 }

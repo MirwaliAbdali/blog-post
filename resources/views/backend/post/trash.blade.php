@@ -3,10 +3,10 @@
                 <div class="container-fluid">
                     <div class="card">
                       <h5 class="card-header">
-                        Posts
+                        Trashed Posts
                         <a href="{{route('post.create')}}" class="btn btn-success float-right">Add Post</a>
                         <br><br>
-                        <a href="{{route('post.trash')}}" class="btn btn-danger float-right">Trash Posts</a>
+                        <a href="{{route('post.index')}}" class="btn btn-danger float-right">All Posts</a>
                       </h5>
 
                       <div class="card-body">
@@ -31,8 +31,8 @@
                               {{-- <td>{{$post->description}}</td> --}}
                               {{-- <td>{{$post->slug}}</td> --}}
                               <td>
-                                <a href="#" id="{{$post->id}}" class="fa fa-trash mr-4 delete"></a> 
-                                <a href="{{route('post.edit',['post'=>$post->id])}}" class="fa fa-edit"></a></td>
+                                <a href="{{route('post.force-delete',['id'=>$post->id])}}" class="fa fa-trash mr-4 delete"></a>--- 
+                                <a href="{{route('post.restore',['id'=>$post->id])}}"><img src="{{asset('backend/img/Restart.ico')}}" style="width:24px"></a></td>
                             </tr>
                             @endforeach
                           </tbody>
@@ -47,9 +47,9 @@
 
 @section('script')
 
-<script>
-  $('.delete').click(function(){
-        Swal.fire({
+{{-- <script>
+ $('.delete').click(function(){
+    Swal.fire({
         title: "Are you sure to delete?",
         text: "You won't be able to revert this!",
         icon: "warning",
@@ -57,37 +57,32 @@
         confirmButtonColor: "#3085d6",
         cancelButtonColor: "#d33",
         confirmButtonText: "Yes, delete it!"
-      }).then((result) => {
+    }).then((result) => {
         if (result.isConfirmed) {
-
             var id = $(this).attr('id');
-            var url = 'post/'+id;
+            var url = '/force-delete/' + id; // Ensure this URL matches your route
 
-                   $.ajax({
-                      headers: {
-                          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                      },
-                      url: url,
-                      type: 'DELETE',
-                      datatype: 'json',
-                      data: {
-                          '_method': 'DELETE'
-                      },
-                      success: function(data) {
-                        location.reload();
-                      },
-                      error: function(xhr, status, error) {
-                          // Handle error case
-                          alert('Error: ' + error);
-                      }
-                  });
-                   
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                url: url,
+                type: 'DELETE',
+                success: function(data) {
+                    location.reload(); // Reload page on success
+                },
+                error: function(xhr, status, error) {
+                    // Handle error case
+                    alert('Error: ' + error);
+                }
+            });
         }
-      });
-  })
+    });
+});
+
 
   //////////////////////////
-</script>
+</script> --}}
 
 <script>
   const Toast = Swal.mixin({

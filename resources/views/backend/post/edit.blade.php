@@ -31,7 +31,7 @@
 
         <div class="form-group">
           <label for="description">Description</label>
-          <textarea name="description" cols="30" rows="5" class="form-control my-editor"  placeholder="Enter post description">value="{{$post->description}}"</textarea>
+          <textarea name="description" cols="30" rows="5" class="form-control my-editor"  placeholder="Enter post description">{{$post->description}}</textarea>
           @error('description')
             <span class="text-danger">{{$message}}</span>
           @enderror
